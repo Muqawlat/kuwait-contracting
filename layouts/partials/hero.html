@@ -1,6 +1,6 @@
 <section class="hero">
   {{/* البحث عن الصورة بجميع الصيغ */}}
-  {{ $img := resources.Get "images/hero-new.webp" }}
+  {{ $img := resources.Get "images/14.webp" }}
   {{ if not $img }}{{ $img = resources.Get "images/hero-new.jpg" }}{{ end }}
   {{ if not $img }}{{ $img = resources.Get "images/hero-new.jpeg" }}{{ end }}
   {{ if not $img }}{{ $img = resources.Get "images/hero-new.png" }}{{ end }}
