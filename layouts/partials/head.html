@@ -2,12 +2,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  {{/* 🚨 كود التحقق من جوجل (تمت إضافته هنا) 🚨 */}}
+  {{/* 1. Google Search Console Verification */}}
   <meta name="google-site-verification" content="pgigX05_bS7NIfxgAqbgPF1yhXFxfBwGxSSkj62HsC4" />
+
+  {{/* 2. Google Analytics (GA4) - يعمل فقط إذا وضعت الـ ID في config.toml */}}
+  {{ if .Site.Params.google_analytics_id }}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ .Site.Params.google_analytics_id }}');
+    </script>
+  {{ end }}
 
   <title>{{ .Site.Title }}</title>
   
-  {{/* ربط CSS البسيط والمباشر */}}
+  {{/* ربط CSS */}}
   {{ $style := resources.Get "scss/main.scss" | toCSS | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   
