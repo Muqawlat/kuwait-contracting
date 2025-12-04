@@ -1,5 +1,6 @@
-/* assets/scss/main.scss - Updated Fixes */
+/* assets/scss/main.scss - Bright & Vibrant Hero Update */
 
+/* ... (نفس المتغيرات السابقة) ... */
 :root {
     --primary: #0B3D91;
     --accent: #FFC300;
@@ -20,45 +21,79 @@
     --shadow: rgba(0,0,0,0.5);
 }
 
-body { 
-    margin: 0; font-family: 'Tahoma', sans-serif; background: var(--bg); color: var(--text); direction: rtl; 
-    transition: background 0.3s ease;
-}
+body { margin: 0; font-family: 'Tahoma', sans-serif; background: var(--bg); color: var(--text); direction: rtl; transition: background 0.3s ease; }
 a { text-decoration: none; }
 .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
 
-/* Hero Section Updates */
+/* ========================================= */
+/* ☀️ Hero Section - Bright & Professional ☀️ */
+/* ========================================= */
 .hero { 
     position: relative; 
-    /* إزالة الارتفاع الثابت للسماح للصورة بأخذ راحتها، أو تثبيتها مع احتواء الصورة */
     height: 70vh; 
     min-height: 500px; 
     display: flex; align-items: center; justify-content: center; text-align: center;
-    background-color: #000; /* خلفية سوداء لتغطية الفراغات إن وجدت */
+    /* تغيير الخلفية من الأسود إلى الرمادي الفاتح لتجنب الكآبة أثناء التحميل */
+    background-color: #f0f0f0; 
     overflow: hidden;
 }
+
 .hero img { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    /* التعديل الهام: object-fit: cover يقص الصورة، سنبقيها cover للهيرو لكي تغطي الشاشة */
-    /* إذا كنت تريدها كاملة تماماً في الهيرو (قد تظهر حواف سوداء) اجعلها contain */
     object-fit: cover; 
-    opacity: 0.5; /* تغميق الصورة ليظهر النص */
+    
+    /* 🔥 التعديل الجوهري هنا: */
+    opacity: 1; /* الصورة ظاهرة بالكامل (كانت 0.5) */
+    filter: brightness(1.05) contrast(1.05); /* زيادة طفيفة في السطوع والتباين */
     z-index: 1; 
 }
-.hero-content { position: relative; z-index: 2; padding: 20px; }
+
+/* طبقة تدرج لوني ذكية: شفافة من الأعلى، وداكنة قليلاً من الأسفل لبروز النص */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* تدرج يبدأ شفافاً وينتهي بظلال خفيفة في الأسفل */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+}
+
+.hero-content { 
+    position: relative; 
+    z-index: 3; /* فوق الصورة وفوق التدرج */
+    padding: 20px; 
+    
+    /* إضافة خلفية ضبابية خفيفة جداً خلف النص فقط لضمان القراءة دون تعتيم الصورة */
+    background: radial-gradient(closest-side, rgba(0,0,0,0.4), transparent);
+}
+
 .hero h1 { 
     font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; color: #fff; font-weight: 900;
-    text-shadow: 2px 2px 0 var(--primary), -2px -2px 0 var(--primary), 2px -2px 0 var(--primary), -2px 2px 0 var(--primary);
+    /* زيادة قوة الظل للنص لضمان القراءة فوق الصورة الساطعة */
+    text-shadow: 
+        3px 3px 0 var(--primary), 
+        -2px -2px 5px rgba(0,0,0,0.5);
 }
-/* تنسيق الأزرار الجديد ليدعم 3 أزرار */
+
 .hero-btns { 
     margin-top: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; 
 }
-.btn { padding: 10px 20px; border-radius: 50px; font-weight: bold; background: var(--primary); color: #fff; border: 2px solid var(--primary); white-space: nowrap; }
-.btn-outline { background: rgba(0,0,0,0.5); border: 2px solid #fff; color: #fff; }
+.btn { 
+    padding: 12px 25px; border-radius: 50px; font-weight: bold; 
+    background: var(--primary); color: #fff; border: 2px solid var(--primary); 
+    white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* ظل للزر لبروزه */
+}
+.btn-outline { 
+    background: rgba(255,255,255,0.1); /* خلفية زجاجية خفيفة */
+    border: 2px solid #fff; color: #fff; 
+    backdrop-filter: blur(5px); /* تأثير الزجاج */
+}
 .btn:hover, .btn-outline:hover { transform: scale(1.05); transition: 0.2s; }
 
-/* Services */
+/* ========================================= */
+/* Rest of the CSS (Services, Gallery, etc.) */
+/* ========================================= */
+
 .services-list { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
 .service-card { 
     background: var(--card-bg); padding: 20px; border-radius: 10px; 
@@ -68,7 +103,6 @@ a { text-decoration: none; }
 }
 .service-card h3 { margin: 0 0 10px 0; color: var(--primary); }
 
-/* Gallery Updates - لعلاج مشكلة القص */
 .gallery { margin-top: 50px; }
 .carousel { 
     display: flex; overflow-x: auto; gap: 15px; 
@@ -80,14 +114,11 @@ a { text-decoration: none; }
     flex: 0 0 100%; 
     scroll-snap-align: center; 
     border-radius: 10px; 
-    height: 450px; /* ارتفاع ثابت */
-    background-color: #000; /* خلفية سوداء للفراغات */
-    
-    /* التعديل الجذري: contain يظهر الصورة كاملة دون قص */
+    height: 450px; 
+    background-color: #f0f0f0; 
     object-fit: contain;  
 }
 
-/* Floating Elements */
 .float-cta { 
     position: fixed; bottom: 20px; right: 20px; background: #25D366; 
     color: white; width: 60px; height: 60px; border-radius: 50%; 
