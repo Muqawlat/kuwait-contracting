@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ar">
+{{ partial "head.html" . }}
+<body>
+  {{ partial "hero.html" . }}
+  {{ partial "services.html" . }}
+  {{ partial "gallery.html" . }}
+  
+  {{/* الزر العائم */}}
+  {{ $phone := replaceRE " " "" .Site.Params.phone }}
+  <a href="tel:{{ $phone }}" class="float-cta">📞</a>
+</body>
+</html>
