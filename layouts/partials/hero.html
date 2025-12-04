@@ -1,22 +1,28 @@
 <section class="hero">
-  {{/* محاولة جلب الصورة، إذا فشلت نستخدم رابط خارجي مباشرة كنص */}}
-  {{ $img := resources.Get "images/14.webp" }}
+  {{/* البحث عن الصورة بجميع الصيغ */}}
+  {{ $img := resources.Get "images/hero-new.webp" }}
+  {{ if not $img }}{{ $img = resources.Get "images/hero-new.jpg" }}{{ end }}
+  {{ if not $img }}{{ $img = resources.Get "images/hero-new.jpeg" }}{{ end }}
+  {{ if not $img }}{{ $img = resources.Get "images/hero-new.png" }}{{ end }}
+
   {{ $imgURL := "" }}
   
   {{ if $img }}
     {{ $imgURL = $img.RelPermalink }}
   {{ else }}
-    {{ $imgURL = "https://placehold.co/1200x600/111/fff?text=ABO+KARAS" }}
+    {{ $imgURL = "https://placehold.co/1920x1080/111/fff?text=ABO+KARAS" }}
   {{ end }}
 
-  <img src="{{ $imgURL }}" alt="Hero Image">
+  <img src="{{ $imgURL }}" alt="Hero Image" loading="eager">
   
   <div class="hero-content">
-    <h1>أبو كاراس</h1>
+    <h1>{{ .Site.Params.company_name }}</h1>
     <div class="hero-btns">
       {{ $phone := replaceRE " " "" .Site.Params.phone }}
+      {{/* الأزرار الثلاثة المطلوبة */}}
       <a href="tel:{{ $phone }}" class="btn">اتصل الآن</a>
       <a href="#services" class="btn btn-outline">خدماتنا</a>
+      <a href="#gallery" class="btn btn-outline">معرض الأعمال</a>
     </div>
   </div>
 </section>
