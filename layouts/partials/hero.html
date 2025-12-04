@@ -1,0 +1,22 @@
+<section class="hero">
+  {{/* محاولة جلب الصورة، إذا فشلت نستخدم رابط خارجي مباشرة كنص */}}
+  {{ $img := resources.Get "images/hero-new.png" }}
+  {{ $imgURL := "" }}
+  
+  {{ if $img }}
+    {{ $imgURL = $img.RelPermalink }}
+  {{ else }}
+    {{ $imgURL = "https://placehold.co/1200x600/111/fff?text=ABO+KARAS" }}
+  {{ end }}
+
+  <img src="{{ $imgURL }}" alt="Hero Image">
+  
+  <div class="hero-content">
+    <h1>أبو كاراس</h1>
+    <div class="hero-btns">
+      {{ $phone := replaceRE " " "" .Site.Params.phone }}
+      <a href="tel:{{ $phone }}" class="btn">اتصل الآن</a>
+      <a href="#services" class="btn btn-outline">خدماتنا</a>
+    </div>
+  </div>
+</section>
