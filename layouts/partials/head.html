@@ -2,10 +2,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  {{/* 1. Google Search Console Verification */}}
+  {{/* 1. التحقق من Search Console (خفيف جداً ولا يؤثر) */}}
   <meta name="google-site-verification" content="pgigX05_bS7NIfxgAqbgPF1yhXFxfBwGxSSkj62HsC4" />
 
-  {{/* 2. Google Analytics (GA4) - يعمل فقط إذا وضعت الـ ID في config.toml */}}
+  <title>{{ .Site.Title }}</title>
+  
+  {{/* 🚀 الأولوية الأولى: تسريع الاتصال بجوجل (دون تحميل الملفات بعد) */}}
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+
+  {{/* 🚀 الأولوية الثانية: تحميل التصميم (CSS) فوراً لكي لا يظهر الموقع مشوهًا */}}
+  {{ $style := resources.Get "scss/main.scss" | toCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+
+  {{/* Schema (خفيف جداً) */}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{ .Site.Params.company_name }}",
+    "telephone": "{{ .Site.Params.phone }}"
+  }
+  </script>
+
+  {{/* 🐢 الأولوية الأخيرة: Google Analytics */}}
+  {{/* وضعناه في آخر الـ Head لكي يبدأ المتصفح في تحميله بعد أن يضمن تحميل التصميم */}}
   {{ if .Site.Params.google_analytics_id }}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.google_analytics_id }}"></script>
     <script>
@@ -15,20 +36,4 @@
       gtag('config', '{{ .Site.Params.google_analytics_id }}');
     </script>
   {{ end }}
-
-  <title>{{ .Site.Title }}</title>
-  
-  {{/* ربط CSS */}}
-  {{ $style := resources.Get "scss/main.scss" | toCSS | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
-  
-  {{/* Schema */}}
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "{{ .Site.Params.company_name }}",
-    "telephone": "{{ .Site.Params.phone }}"
-  }
-  </script>
 </head>
