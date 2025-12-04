@@ -1,0 +1,51 @@
+<button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+    <span id="icon-moon">🌙</span>
+    <span id="icon-sun" style="display: none;">☀️</span>
+</button>
+
+<script>
+    (function() {
+        // 1. تحديد العناصر
+        const toggleBtn = document.getElementById('theme-toggle');
+        const iconMoon = document.getElementById('icon-moon');
+        const iconSun = document.getElementById('icon-sun');
+        const htmlEl = document.documentElement;
+
+        // 2. دالة لتحديث الأيقونة بناءً على الوضع
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'inline';
+            } else {
+                iconMoon.style.display = 'inline';
+                iconSun.style.display = 'none';
+            }
+        }
+
+        // 3. التحقق من التفضيل المحفوظ أو تفضيل النظام عند التحميل
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        let currentTheme = 'light';
+
+        if (savedTheme) {
+            currentTheme = savedTheme;
+        } else if (systemPrefersDark) {
+            currentTheme = 'dark';
+        }
+
+        // تطبيق الثيم
+        htmlEl.setAttribute('data-theme', currentTheme);
+        updateIcon(currentTheme);
+
+        // 4. عند الضغط على الزر
+        toggleBtn.addEventListener('click', () => {
+            const activeTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme); // حفظ الاختيار
+            updateIcon(newTheme);
+        });
+    })();
+</script>
